@@ -1,0 +1,65 @@
+<div class="wrapper h-100 d-flex justify-content-center align-items-center">
+    <div class="form-container p-5 bg-white rounded-5">
+        <div class="row g-5">
+            <div class="col-6">
+                <form [formGroup]="billGroup">
+                    <div class="mb-5">
+                        <div class="d-flex justify-content-between px-1">
+                            <label for="bill" class="form-label"> Bill </label>
+                            <span class="text-danger" *ngIf="getControls['bill']?.errors?.['required'] && getControls['bill'].touched"> Can't be Zero </span>
+                        </div>
+                        <input type="number" name="bill" id="bill" placeholder="0" class="form-control text-end" formControlName="bill"
+                            [ngClass]="{'border-danger' : getControls['bill'].invalid && getControls['bill'].touched}">
+                    </div>
+                    <div class="mb-5">
+                        <label for="tip" class="form-label"> Select Tip % </label>
+                        <div class="row g-3">
+                            <div class="col-4" *ngFor="let data of tipCount">
+                                <input type="radio" class="form-check-input d-none" [value]="data.value" formControlName="tip" name="tip" [id]="data.id">
+                                <label [for]="data.id" class="form-check-label w-100" role="button"> 
+                                    <div class="tip-count rounded-2 fs-5 w-100 text-center py-2"
+                                    [ngClass]="billGroup.value.tip === data.value ? 'bg-secondary text-primary' : 'bg-primary text-white'">
+                                        {{data.value}}%
+                                    </div>
+                                </label>    
+                            </div>
+                            <div class="col-4">
+                                <input type="number" name="customTip" id="customTip"
+                                    class="form-control h-100 text-end" placeholder="Custom">
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="d-flex justify-content-between px-1">
+                            <label for="people" class="form-label"> Number of people </label>
+                            <span class="text-danger" *ngIf="getControls['people']?.errors?.['required'] && getControls['people'].touched"> Can't be Zero </span>
+                        </div>
+                        <input type="number" name="people" id="people" placeholder="0" class="form-control text-end" formControlName="people"
+                        [ngClass]="{'border-danger' : getControls['people'].invalid && getControls['people'].touched}">
+                    </div>
+                </form>
+            </div>
+            <div class="col-6">
+                <div class="bg-primary p-5 d-flex justify-content-between flex-column h-100 rounded-4 text-white">
+                    <div class="py-2">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div class="d-flex flex-column">
+                                <span class="text-white"> Tip Amount </span>
+                                <span class="text-muted"> /person </span>
+                            </div>
+                            <span class="fs-1 text-secondary fw-bold"> $ 0.00 </span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-column">
+                                <span class="text-white"> Total </span>
+                                <span class="text-muted"> /person </span>
+                            </div>
+                            <span class="fs-1 text-secondary fw-bold"> $ {{totalPerPerson}} </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary w-100 text-primary" (click)="onReset()"> RESET </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
